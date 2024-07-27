@@ -3,34 +3,74 @@ import { useSelector, useDispatch } from 'react-redux';
 import { removeItem, updateQuantity } from './CartSlice';
 import './CartItem.css';
 
-const CartItem = ({ onContinueShopping }) => {
+const CartItem = ({ onContinueShopping, onCheckoutShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-  // Calculate total amount for all products in the cart
-  const calculateTotalAmount = () => {
- 
+
+  /*
+   * Parse integer value from pricing text value
+   * */
+  const parsePrice = (p) => {
+    return parseInt(p.replace('$', '').trim());
   };
 
-  const handleContinueShopping = (e) => {
-   
-  };
+  /*
+   * Get total sum of a number array
+   * */
+  const sum = (arr) => {
+    const res = arr.reduce((acc, cur) => {
+      return acc + cur
+    }, 0);
 
-
-
-  const handleIncrement = (item) => {
-  };
-
-  const handleDecrement = (item) => {
-   
-  };
-
-  const handleRemove = (item) => {
-  };
+    return res;
+  }
 
   // Calculate total cost based on quantity for an item
   const calculateTotalCost = (item) => {
+    const cost = parsePrice(item.cost);
+    const quantity = item.quantity;
+    return cost * quantity;
   };
+
+  // Calculate total amount for all products in the cart
+  const calculateTotalAmount = () => {
+    const arrItemTotalCost = cart.map((i) => {
+      return calculateTotalCost(i);
+    });
+
+    return sum(arrItemTotalCost);
+  };
+
+
+  const handleContinueShopping = (e) => {
+    onContinueShopping();
+  };
+
+  const handleCheckoutShopping = (e) => {
+    onCheckoutShopping();
+  };
+
+  const handleIncrement = (item) => {
+    dispatch(updateQuantity({
+      type: 'inc',
+      name: item.name,
+      quantity: item.quantity
+    }));
+  };
+
+  const handleDecrement = (item) => {
+    dispatch(updateQuantity({
+      type: 'dec',
+      name: item.name,
+      quantity: item.quantity
+    }));
+  };
+
+  const handleRemove = (item) => {
+    dispatch(removeItem(item))
+  };
+
 
   return (
     <div className="cart-container">
@@ -57,7 +97,7 @@ const CartItem = ({ onContinueShopping }) => {
       <div className="continue_shopping_btn">
         <button className="get-started-button" onClick={(e) => handleContinueShopping(e)}>Continue Shopping</button>
         <br />
-        <button className="get-started-button1">Checkout</button>
+        <button className="get-started-button1" onClick={(e) => handleCheckoutShopping(e)}>Checkout</button>
       </div>
     </div>
   );
