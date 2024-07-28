@@ -46,23 +46,27 @@ body {
     width: 100vw;
     align-items: center;
     justify-content: center;
+    max-width: 1240px;
+    margin: 2rem auto;
+    padding: 2rem;
 }
+
+.product-grid h1 {
+  padding: 0 20px;
+}
+
 .product-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 50px;
-    /* background-color: pink; */
-    /* justify-content: space-between; */
     padding: 20px;
     width: 100%;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    overflow: initial;
 }
 
 /* Product Card */
 .product-card {
-    flex: 0 0 calc(33.33% - 20px); /* Adjust width for 3 cards per row with 20px gap */
-    max-width: calc(26.33% - 20px); /* Adjust max-width for 3 cards per row with 20px gap */
     margin-bottom: 20px;
     padding: 20px;
     background-color: #fff;
@@ -70,8 +74,8 @@ body {
     border-radius: 5px;
     text-align: center;
     position: relative;
-
     gap: 20px;
+    width: calc(calc(100% / 3) - 2rem);
 }
 
 /* Pseudo-classes - Hover effect on product button */
