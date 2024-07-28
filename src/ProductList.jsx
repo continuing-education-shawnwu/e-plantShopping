@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 function ProductList() {
   const [showCart, setShowCart] = useState(false);
-  const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-  const [addedToCart, setAddedToCart] = useState({});
+  const [showPlants, setShowPlants] = useState(true);
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
@@ -263,10 +262,6 @@ function ProductList() {
 
   const handleAddToCart = (product) => {
     dispatch(addItem(product));
-    setAddedToCart((prevState) => ({
-      ...prevState,
-      [product.name]: true,
-    }));
   };
 
   const itemCount = () => {
@@ -312,7 +307,7 @@ function ProductList() {
           </div>
         </div>
       </div>
-      {!showCart? (
+      {!showCart && showPlants ? (
         <div className="product-grid">
           {plantsArray.map((category, index) => (
             <div key={index}>
@@ -335,7 +330,7 @@ function ProductList() {
             </div>
           ))}
         </div>
-      ) :  (
+      ) : (
         <CartItem
           onContinueShopping={handleContinueShopping}
           onCheckoutShopping={handleCheckoutShopping}
