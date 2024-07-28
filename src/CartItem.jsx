@@ -7,7 +7,6 @@ const CartItem = ({ onContinueShopping, onCheckoutShopping }) => {
   const cart = useSelector(state => state.cart.items);
   const dispatch = useDispatch();
 
-
   /*
    * Parse integer value from pricing text value
    * */
@@ -44,10 +43,12 @@ const CartItem = ({ onContinueShopping, onCheckoutShopping }) => {
 
 
   const handleContinueShopping = (e) => {
+    e.preventDefault();
     onContinueShopping();
   };
 
   const handleCheckoutShopping = (e) => {
+    e.preventDefault();
     onCheckoutShopping();
   };
 
